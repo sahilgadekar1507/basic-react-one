@@ -4,21 +4,21 @@ import authService from '../appwrite/auth'
 import {login} from '../store/authSlice'
 import {Button, Input, Logo} from './index'
 import { useDispatch } from 'react-redux'
-import {useform} from 'react-hook-form'
+import {useForm} from 'react-hook-form'
 
-function SignUp() {
+function Signup() {
     const navigate = useNavigate()
     const [error, setError] = useState('');
     const dispatch = useDispatch()
-    const {register, handleSubmit} = useform()
+    const {register, handleSubmit} = useForm()
     
     const create = async(data) => {
         setError("")
         try {
             const userData = await authService.createAccount(data)
-            if (data) {
+            if (userData) {
                 const userData = await authService.getCurrentUser()
-                if (userData) dispatch(login(userData))
+                if(userData) dispatch(login(userData));
                 navigate("/")
             }
         } catch (error) {
@@ -84,4 +84,4 @@ function SignUp() {
   )
 }
 
-export default SignUp
+export default Signup
